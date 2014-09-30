@@ -1,7 +1,7 @@
 jframes
 =======
 
-A light weight animation frame support. With the [frame object](#the_frame_object), you are convinent to do some calculation.
+A light weight animation frame support. With the [frame object](#the-frame-object), you are convinent to do some calculation.
 
 ## The Frame Object
 
