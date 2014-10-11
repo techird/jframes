@@ -1,0 +1,36 @@
+{
+  "name": "jframes",
+  "title": "jframes",
+  "description": "A light weight javascript animation frame library",
+  "version": "0.0.2",
+  "homepage": "https://github.com/techird/jframes",
+  "main": "src/jframes.js",
+  "author": [
+    "techird <techird@qq.com>"
+  ],
+  "repository": {
+  	"type": "git",
+  	"url": "https://github.com/techird/jframes.git"
+  },
+  "keywords": [
+      "animation",
+      "frame",
+      "javascript"
+  ],
+  "bugs": {
+  	"url": "https://github.com/techird/jframes/issues"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "devDependencies": {
+  	"mocha": "*",
+  	"should": "*",
+  	"uglify-js": "*",
+  	"jshint": "*"
+  },
+  "scripts": {
+  	"test": "mocha -R spec && npm run coverage",
+  	"dist": "uglifyjs src/jframes.js -o dist/jframes.min.js -p 5 -c -m",
+  	"lint": "jshint src/*.js *.json"
+  }
+}

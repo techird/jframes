@@ -1,13 +1,6 @@
-(function () {
-    var amd = typeof (define) == 'function';
-    
-    /* jshint browser: true */
-    var exports = amd ? {} : window;
+var jframes = jframes || {};
 
-    if (amd) {
-        /* global define: true */
-        define(exports);
-    }
+void function (exports) {
 
     // 原生动画帧方法 polyfill
     var requestAnimationFrame =
@@ -56,9 +49,9 @@
     }
 
     /**
-     * @method requestFrame
+     * @method request
      * @catalog animate
-     * @grammar requestFrame(action) => {frame}
+     * @grammar request(action) => {frame}
      * @description 请求一个帧，执行指定的动作。动作回调提供一些有用的信息
      *
      * @param {Function} action
@@ -86,7 +79,7 @@
      * @example
      *
      * ```js
-     * requestFrame(function(frame) {
+     * request(function(frame) {
      *     console.log('平均帧率:' + frame.elapsed / (frame.index + 1));
      *
      *     // 更新或渲染动作
@@ -95,28 +88,28 @@
      * });
      * ```
      */
-    function requestFrame(action) {
+    function request(action) {
         var frame = initFrame(action);
         pushFrame(frame);
         return frame;
     }
 
     /**
-     * @method releaseFrame
+     * @method release
      * @catalog animate
-     * @grammar releaseFrame(frame)
+     * @grammar release(frame)
      * @description 释放一个已经请求过的帧，如果该帧在等待集合里，将移除，下个动画帧不会执行释放的帧
      *
-     * @param {frame} frame 使用 requestFrame() 返回的帧
+     * @param {frame} frame 使用 request() 返回的帧
      *
      * @example
      *
      * ```js
-     * var frame = requestFrame(function() {....});
-     * releaseFrame(frame);
+     * var frame = request(function() {....});
+     * release(frame);
      * ```
      */
-    function releaseFrame(frame) {
+    function release(frame) {
         var index = pendingFrames.indexOf(frame);
         if (~index) {
             pendingFrames.splice(index, 1);
@@ -169,6 +162,7 @@
     }
 
     // 暴露
-    exports.requestFrame = requestFrame;
-    exports.releaseFrame = releaseFrame;
-})();
+    exports.request = request;
+    exports.release = release;
+
+}(jframes);
