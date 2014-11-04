@@ -1,6 +1,7 @@
 jframes
 =======
 
+[![Build Status](https://img.shields.io/travis/techird/jframes/master.svg)](https://travis-ci.org/techird/jframes)
 [![NPM version](https://img.shields.io/npm/v/jframes.svg)](http://badge.fury.io/js/jframes)
 
 A light weight animation frame support. With the [frame object](#the-frame-object), you are convinent to do some calculation.

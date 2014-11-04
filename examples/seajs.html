@@ -9,14 +9,16 @@ canvas {
 }
   </style>
   <script src="../lib/seajs/dist/sea.js"></script>
+  <script>
+seajs.config({
+    base: '../'
+});
+  </script>
 </head>
 <body>
   <canvas width="300" height="300"></canvas>
   <button id="release">release</button>
   <script>
-seajs.config({
-    base: '../'
-});
 define('start', function(require) {
   var jframes = require('jframes');
   var canvas = document.querySelector('canvas');

@@ -1,4 +1,6 @@
-! function(exportName) {
+void function(exportName) {
+  'use strict';
+
   var exports = exports || {};
 
   // 原生动画帧方法 polyfill
@@ -173,6 +175,6 @@
   } else if (typeof module !== 'undefined' && module.exports) {
     module.exports = exports;
   } else {
-    this[exportName] = exports;
+    window[exportName] = exports;
   }
 }('jframes');
