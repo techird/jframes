@@ -31,3 +31,4 @@ node_modules
 # Bower
 coverage
 components
+lib

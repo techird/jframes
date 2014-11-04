@@ -2,35 +2,36 @@
   "name": "jframes",
   "title": "jframes",
   "description": "A light weight javascript animation frame library",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/techird/jframes",
   "main": "src/jframes.js",
   "author": [
     "techird <techird@qq.com>"
   ],
   "repository": {
-  	"type": "git",
-  	"url": "https://github.com/techird/jframes.git"
+    "type": "git",
+    "url": "https://github.com/techird/jframes.git"
   },
   "keywords": [
-      "animation",
-      "frame",
-      "javascript"
+    "animation",
+    "frame",
+    "javascript"
   ],
   "bugs": {
-  	"url": "https://github.com/techird/jframes/issues"
+    "url": "https://github.com/techird/jframes/issues"
   },
   "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {
-  	"mocha": "*",
-  	"should": "*",
-  	"uglify-js": "*",
-  	"jshint": "*"
+    "mocha": "2.0.1",
+    "should": "4.1.0",
+    "uglify-js": "2.4.15",
+    "jdists": "0.1.10",
+    "jshint": "2.5.8"
   },
   "scripts": {
-  	"test": "mocha -R spec && npm run coverage",
-  	"dist": "uglifyjs src/jframes.js -o dist/jframes.min.js -p 5 -c -m",
-  	"lint": "jshint src/*.js *.json"
+    "test": "mocha -R spec && npm run coverage",
+    "dist": "jdists src/jframes.js -o jframes.js && uglifyjs jframes.js -o jframes.min.js -p 5 -c -m",
+    "lint": "jshint src/*.js *.json"
   }
 }

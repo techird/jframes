@@ -2,39 +2,13 @@
 <html>
 <head>
   <title>jframes example</title>
-  <style>
-canvas {
-  border: 1px solid black;
-}
-  </style>
-  <script src="../src/jframes.js"></script>
+  <meta charset="utf-8">
 </head>
 <body>
-  <canvas width="300" height="300"></canvas>
-  <button id="release">release</button>
-  <script>
-void function() {
-  var canvas = document.querySelector('canvas');
-  var context = canvas.getContext('2d');
-  var size = 50;
-  var render = function() {
-    var x = Math.random() * canvas.width;
-    var y = Math.random() * canvas.height;
-    var color = '#' + parseInt(0x1000000 + Math.random() * 0x1000000).
-      toString(16).substring(1);
-    context.fillStyle = color;
-    context.fillRect(x - size / 2, y - size / 2, size, size)
-  };
-  var req = jframes.request(function(frame) {
-    render();
-    frame.next();
-  });
-  var release = document.querySelector('#release');
-  release.addEventListener('click', function() {
-    jframes.release(req);
-    this.parentNode.removeChild(this);
-  });
-}();
-  </script>
+  <ul>
+    <li><a href="base.html">常规引用</a></li>
+    <li><a href="requirejs.html">AMD(requirejs)引用</a></li>
+    <li><a href="seajs.html">CMD(seajs)引用</a></li>
+  </ul>
 </body>
 </html>
