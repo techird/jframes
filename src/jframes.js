@@ -8,10 +8,25 @@ void function(exportName) {
     window.requestAnimationFrame ||
     window.mozRequestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
-    window.msRequestAnimationFrame ||
-    function(fn) {
-      return setTimeout(fn, 1000 / 60);
-    };
+    window.msRequestAnimationFrame || (function() {
+      // polyfill
+      var lastTime = 0;
+      var startTime = +new Date();
+
+      return function polyfill(fn) {
+
+        var currTime = +new Date();
+        var timeToCall = Math.max(0, 17 - (currTime - lastTime));
+
+        var id = window.setTimeout(function() {
+          callback(currTime - startTime);
+        }, timeToCall);
+
+        lastTime = currTime + timeToCall;
+
+        return id;
+      };
+    })();
 
   var cancelAnimationFrame =
     window.cancelAnimationFrame ||
