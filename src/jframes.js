@@ -13,7 +13,7 @@ void function(exportName) {
       var lastTime = 0;
       var startTime = +new Date();
 
-      return function polyfill(fn) {
+      return function polyfill(callback) {
 
         var currTime = +new Date();
         var timeToCall = Math.max(0, 17 - (currTime - lastTime));
