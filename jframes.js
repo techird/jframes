@@ -1,31 +1,35 @@
 void function(exportName) {
   'use strict';
-
   var exports = exports || {};
-
   // 原生动画帧方法 polyfill
   var requestAnimationFrame =
     window.requestAnimationFrame ||
     window.mozRequestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
-    window.msRequestAnimationFrame ||
-    function(fn) {
-      return setTimeout(fn, 1000 / 60);
-    };
-
+    window.msRequestAnimationFrame || (function() {
+      // polyfill
+      var lastTime = 0;
+      var startTime = +new Date();
+      return function polyfill(callback) {
+        var currTime = +new Date();
+        var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+        var id = window.setTimeout(function() {
+          callback(currTime - startTime);
+        }, timeToCall);
+        lastTime = currTime + timeToCall;
+        return id;
+      };
+    })();
   var cancelAnimationFrame =
     window.cancelAnimationFrame ||
     window.mozCancelAnimationFrame ||
     window.webkitCancelAnimationFrame ||
     window.msCancelAnimationFrame ||
     window.clearTimeout;
-
   // 上一个请求的原生动画帧 id
   var frameRequestId;
-
   // 等待执行的帧动作的集合，这些帧的方法将在下个原生动画帧同步执行
   var pendingFrames = [];
-
   /**
    * 添加一个帧到等待集合中
    *
@@ -36,7 +40,6 @@ void function(exportName) {
       frameRequestId = requestAnimationFrame(executePendingFrames);
     }
   }
-
   /**
    * 执行所有等待帧
    */
@@ -48,7 +51,6 @@ void function(exportName) {
     }
     frameRequestId = 0;
   }
-
   /**
    * @method request
    * @catalog animate
@@ -94,7 +96,6 @@ void function(exportName) {
     pushFrame(frame);
     return frame;
   }
-
   /**
    * @method release
    * @catalog animate
@@ -119,7 +120,6 @@ void function(exportName) {
       cancelAnimationFrame(frameRequestId);
     }
   }
-
   /**
    * 初始化一个帧，主要用于后续计算
    */
@@ -135,37 +135,31 @@ void function(exportName) {
     };
     return frame;
   }
-
   /**
    * 执行一个帧动作
    */
   function executeFrame(frame) {
     // 当前帧时间错
     var time = +new Date();
-
     // 当上一帧到当前帧经过的时间
     var dur = time - frame.time;
-
     //
     // http://stackoverflow.com/questions/13133434/requestanimationframe-detect-stop
     // 浏览器最小化或切换标签，requestAnimationFrame 不会执行。
     // 检测时间超过 200 ms（频率小于 5Hz ） 判定为计时器暂停，重置为一帧长度
     //
-    if (dur > 200) {
-      dur = 1000 / 60;
-    }
-
+    //if (dur > frame.maxFrameTime) {
+    //  dur = 1000 / 60;
+    //}
     frame.dur = dur;
     frame.elapsed += dur;
     frame.time = time;
     frame.action.call(null, frame);
     frame.index++;
   }
-
   // 暴露
   exports.request = request;
   exports.release = release;
-
   if (typeof define === 'function') {
     if (define.amd || define.cmd) {
       define(function() {
