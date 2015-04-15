@@ -16,7 +16,7 @@ void function(exportName) {
       return function polyfill(callback) {
 
         var currTime = +new Date();
-        var timeToCall = Math.max(0, 17 - (currTime - lastTime));
+        var timeToCall = Math.max(0, 16 - (currTime - lastTime));
 
         var id = window.setTimeout(function() {
           callback(currTime - startTime);
@@ -166,9 +166,9 @@ void function(exportName) {
     // 浏览器最小化或切换标签，requestAnimationFrame 不会执行。
     // 检测时间超过 200 ms（频率小于 5Hz ） 判定为计时器暂停，重置为一帧长度
     //
-    if (dur > 200) {
-      dur = 1000 / 60;
-    }
+    //if (dur > frame.maxFrameTime) {
+    //  dur = 1000 / 60;
+    //}
 
     frame.dur = dur;
     frame.elapsed += dur;
